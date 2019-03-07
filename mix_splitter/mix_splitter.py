@@ -1,7 +1,8 @@
-from downloader import yt_downloader
-from argument_parser import args
-from helpers import (get_video_description, get_songs,
-                     make_ids_list, make_urls_list)
+from .downloader import yt_downloader
+from .argument_parser import args
+from sys import exit
+from .helpers import (get_video_description, get_songs,
+                      make_ids_list, make_urls_list)
 
 
 def main():

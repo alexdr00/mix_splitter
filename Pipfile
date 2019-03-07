@@ -11,6 +11,8 @@ requests = "*"
 beautifulsoup4 = "*"
 fake-useragent = "*"
 lxml = "*"
+setuptools = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.6"
