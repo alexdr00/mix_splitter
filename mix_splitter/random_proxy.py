@@ -1,9 +1,6 @@
-from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import requests
 import random
-
-usert_agent = UserAgent()
 
 
 def random_proxy(proxy_list):
@@ -27,13 +24,8 @@ def delete_proxy(proxy_list, proxy):
 def get_proxy_list():
     proxy_list = []
 
-    headers = {
-        'User-Agent': usert_agent.random
-    }
-
     proxies_req = requests.get(
         'https://www.sslproxies.org',
-        headers=headers
     )
 
     page = proxies_req.text
