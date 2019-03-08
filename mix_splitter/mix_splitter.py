@@ -2,12 +2,14 @@ from downloader import yt_downloader
 from argument_parser import args
 from sys import exit
 from helpers import (get_video_description, get_songs,
-                      make_ids_list, make_urls_list)
+                     make_ids_list, make_urls_list,
+                     append_artist, makes_songs_to_download_list)
 
 
 def main():
     mix_url = args.url
     location = args.location
+    artist = args.artist
     mix_id = mix_url.split('=')[1]
 
     print('\n*******************')
@@ -15,7 +17,17 @@ def main():
     print('*******************')
     description = get_video_description(mix_id)
     songs_list = get_songs(description)
-    ids_list, not_found = make_ids_list(songs_list)
+
+    if artist:
+        songs_list = append_artist(songs_list, artist)
+
+    ids_list = make_ids_list(songs_list)
+    titles_list = makes_songs_to_download_list(songs_list)
+
+    print('-- List of songs to download --')
+    for title in titles_list:
+        print(title)
+
     urls = make_urls_list(ids_list)
 
     print('\n*******************')

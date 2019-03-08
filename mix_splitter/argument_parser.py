@@ -18,4 +18,11 @@ parser.add_argument(
          '(default to current directory)',
 )
 
+parser.add_argument(
+    '-a',
+    '--artist',
+    default=False,
+    help='If the mix is an album provide the artist',
+)
+
 args = parser.parse_args()

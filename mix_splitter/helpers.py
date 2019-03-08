@@ -9,13 +9,13 @@ from bs4 import BeautifulSoup
 songs_not_found = []
 
 
-def get_video_id(search_query):
+def get_video_info(search_query):
     """
-    Gets the first video that is found with the search query,
-    then it extracts its id.
+    Makes n attempts to get the video's id and title of the search query
     :param str search_query: query to search in youtube
-    :return str: first video found's id, if the first video title found
-    doesn't have anything to do with the search query, then returns None
+    :return dict or None: Video found's id and title.
+    If within n attempts the videos
+    doesn't have anything to do with the search query, returns None
     """
     search_query = search_query.lower().strip()
     base_url = 'https://www.youtube.com/results?search_query='
@@ -37,11 +37,11 @@ def get_video_id(search_query):
 
     for video in videos_found:
         href = video.a['href']
-        video_title = video.a['title'].lower()
+        title_video = video.a['title'].lower()
 
         similarity_ratio = SequenceMatcher(
             None,
-            video_title,
+            title_video,
             search_query
         ).ratio()
 
@@ -56,7 +56,7 @@ def get_video_id(search_query):
 
         id_video = href.split('=')[1]
 
-        return id_video
+        return {'id_video': id_video, 'title_video': title_video}
 
 
 def get_video_description(id_video):
@@ -77,6 +77,24 @@ def get_video_description(id_video):
     return description
 
 
+def append_artist(songs, artist):
+    """
+    When the songs gathered from the description just contains the
+    titles of the songs usually means it's an artist's album.
+    If an artist was provided appends the song title to the artist
+    using a hyphen (artist - song)
+    :param list songs: List of song titles (only song title)
+    :param str artist: Artist to search for with the song names
+    :return list: song titles along with the artist
+    """
+    songs_complete = []
+    for song in songs:
+        song_complete = f'{artist} - {song}'
+        songs_complete.append(song_complete)
+
+    return songs_complete
+
+
 def get_songs(description):
     """
     Extracts the songs located in the description
@@ -94,7 +112,7 @@ def get_songs(description):
 
     for idx, child in enumerate(description):
         if (child.string is not None
-           and re.match(yt_time_regex, child.string)):
+                and re.match(yt_time_regex, child.string)):
 
             # When the song name is located before the time
             if description[idx + 1].name == 'br':
@@ -117,17 +135,25 @@ def get_songs(description):
     return songs
 
 
+def makes_songs_to_download_list(song_list):
+    titles_list = [get_video_info(song_name)['title_video']
+                   for song_name in song_list
+                   if get_video_info(song_name) is not None]
+
+    return titles_list
+
+
 def make_ids_list(song_list):
     """
     Extracts the youtube video id of each song in the list
     :param list song_list: list of song names
     :return list: video ids related to each song
     """
-    ids_list = [get_video_id(song_name)
+    ids_list = [get_video_info(song_name)['id_video']
                 for song_name in song_list
-                if get_video_id(song_name) is not None]
+                if get_video_info(song_name) is not None]
 
-    return ids_list, songs_not_found
+    return ids_list
 
 
 def make_urls_list(ids_list):
