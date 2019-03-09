@@ -24,6 +24,13 @@ def main():
     ids_list = make_ids_list(songs_list)
     titles_list = makes_songs_to_download_list(songs_list)
 
+    if not titles_list:
+        print("\n")
+        print("**** This mix is not compatible (I couldn't find any song "
+              "in the video description or other source) ****")
+        print("\n")
+        exit()
+
     print('-- List of songs to download --')
     for title in titles_list:
         print(title)
