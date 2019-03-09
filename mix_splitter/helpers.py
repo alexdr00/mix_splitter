@@ -6,8 +6,6 @@ from difflib import SequenceMatcher
 from random_proxy import main as random_proxy
 from bs4 import BeautifulSoup
 
-songs_not_found = []
-
 
 def get_video_info(search_query):
     """
@@ -46,7 +44,6 @@ def get_video_info(search_query):
         ).ratio()
 
         if max_attempts == 0:
-            songs_not_found.append(search_query)
             return None
 
         # If found the incorrect video
@@ -63,7 +60,7 @@ def get_video_description(id_video):
     """
     Gets the video description scraped from youtube.
     :param str id_video: youtube video id
-    :return str: a text with the video's description
+    :return BeautifulSoup description: video description as bs4 object
     """
     base_url = 'https://www.youtube.com/watch?v='
     url = base_url + id_video
@@ -98,7 +95,7 @@ def append_artist(songs, artist):
 def get_songs(description):
     """
     Extracts the songs located in the description
-    :param str description: video description
+    :param BeautifulSoup description: video description as bs4 object
     :return list: song names
     """
     # pattern for a youtube video time (e.g. 34:87, 2:38:56)
@@ -113,6 +110,12 @@ def get_songs(description):
     for idx, child in enumerate(description):
         if (child.string is not None
                 and re.match(yt_time_regex, child.string)):
+
+            # When there are no more children
+            try:
+                description[idx + 1]
+            except IndexError:
+                break
 
             # When the song name is located before the time
             if description[idx + 1].name == 'br':
