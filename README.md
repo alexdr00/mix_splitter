@@ -39,10 +39,11 @@ If you don't see that, you need to do the following step:
 ## Usage
 
 #### Basic
-`mix_splitter -u '<YOUTUBE_MIX_URL>`'
+`mix_splitter -u '<YOUTUBE_MIX_URL>'`
 
 **Note 1:** Make sure to enclose the URL with quotes  
 **Note 2:** That will dowload the songs in the current directory
+
 ---
 
 
