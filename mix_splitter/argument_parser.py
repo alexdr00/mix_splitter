@@ -6,8 +6,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     '-u',
     '--url',
+    default=False,
     help='Youtube mix url to download the songs from',
-    required=True
 )
 
 parser.add_argument(
@@ -23,6 +23,13 @@ parser.add_argument(
     '--artist',
     default=False,
     help='If the mix is an album provide the artist',
+)
+
+parser.add_argument(
+    '-s',
+    '--songs',
+    default=False,
+    help='.txt that contains the songs. These songs will be downloaded',
 )
 
 args = parser.parse_args()

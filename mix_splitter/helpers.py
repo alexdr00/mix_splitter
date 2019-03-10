@@ -171,3 +171,9 @@ def make_urls_list(ids_list):
                  if _id is not None]
 
     return urls_list
+
+
+def get_songs_txt(txt_path):
+    txt = open(txt_path, 'r').read()
+
+    return txt.split('\n')

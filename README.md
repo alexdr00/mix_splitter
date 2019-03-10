@@ -39,19 +39,22 @@ If you don't see that, you need to do the following step:
 ## Usage
 
 #### Basic
-`mix_splitter -u <YOUTUBE_MIX_URL>`  
-That will dowload the songs in the current directory
+`mix_splitter -u '<YOUTUBE_MIX_URL>`'
+
+**Note 1:** Make sure to enclose the URL with quotes  
+**Note 2:** That will dowload the songs in the current directory
 ---
+
 
 #### If you want specify the directory where the songs are downloaded
 with `-l`  
-`mix_splitter -u <YOUTUBE_MIX_URL> -l /directory/to/download/the_songs`
+`mix_splitter -u '<YOUTUBE_MIX_URL>' -l /directory/to/download/the_songs`
 
 ---
 #### Specify album artist
 Sometimes the mixes' description just contain the title of the songs (with no artist). This is usually an artist's album. To download these kind of mixes, you can specify the name of the artist with `-a`.
 
-`mix_splitter -u <YOUTUBE_MIX_URL> -a <ARTIST>`
+`mix_splitter -u '<YOUTUBE_MIX_URL>' -a <ARTIST>`
 
 
 ## What mixes are compatible?
@@ -59,13 +62,13 @@ Those that have the songs in the description.
 
 Sometimes the mixes don't contain the song titles in the description, but they're provided in the comments.
 
-In a case like that, copy the entire comment and paste it in a new .txt file.
+In a case like that, copy the the part of the comment that contains the songs and paste that in a new .txt file.
 
 Then execute the script with the command `-s` and append the path of that .txt file.
 
-`mix_splitter -u <YOUTUBE_MIX_URL> -s /file/that/contains/the_songs.txt`
+`mix_splitter -s /file/that/contains/the_songs.txt`  
 
-
+**Note 3:** Since that file already contains the songs to download, the youtube mix url is no longer necessary. So just providing the path is enough.
 
 ## License
 

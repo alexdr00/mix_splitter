@@ -3,20 +3,36 @@ from argument_parser import args
 from sys import exit
 from helpers import (get_video_description, get_songs,
                      make_ids_list, make_urls_list,
-                     append_artist, makes_songs_to_download_list)
+                     append_artist, makes_songs_to_download_list,
+                     get_songs_txt)
 
 
 def main():
     mix_url = args.url
     location = args.location
     artist = args.artist
-    mix_id = mix_url.split('=')[1]
+    txt_source = args.songs
+
+    if mix_url and txt_source:
+        print('\n*** You must provide only one source to download '
+              'the songs ***')
+        exit()
+
+    if not mix_url and not txt_source:
+        print('\n*** You must provide one source to download the songs ***')
+        exit()
 
     print('\n*******************')
     print('Collecting songs...')
     print('*******************')
-    description = get_video_description(mix_id)
-    songs_list = get_songs(description)
+
+    if mix_url:
+        mix_id = mix_url.split('=')[1]
+        description = get_video_description(mix_id)
+        songs_list = get_songs(description)
+    else:
+        # .txt source
+        songs_list = get_songs_txt(txt_source)
 
     if artist:
         songs_list = append_artist(songs_list, artist)
@@ -27,7 +43,7 @@ def main():
     if not titles_list:
         print("\n")
         print("**** This mix is not compatible (I couldn't find any song "
-              "in the video description or other source) ****")
+              "in the video description or txt_source) ****")
         print("\n")
         exit()
 
@@ -50,4 +66,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
+
+    exit()
