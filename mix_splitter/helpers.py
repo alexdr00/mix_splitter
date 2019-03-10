@@ -3,7 +3,7 @@ import re
 import urllib
 
 from difflib import SequenceMatcher
-from random_proxy import main as random_proxy
+from mix_splitter.random_proxy import main as random_proxy
 from bs4 import BeautifulSoup
 
 

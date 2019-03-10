@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='mix_splitter',
-    version='0.0.1',
+    version='0.0.3',
     description='Download all the songs in a youtube mix.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -21,7 +21,7 @@ setup(
     python_requires='>=3',
     entry_points={
         'console_scripts': [
-            'mix_splitter=mix_splitter.mix_splitter:main',
+            'mix-splitter=mix_splitter.mix_splitter:main',
         ],
     },
     install_requires=[

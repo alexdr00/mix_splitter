@@ -1,10 +1,10 @@
-from downloader import yt_downloader
-from argument_parser import args
+from mix_splitter.downloader import yt_downloader
+from mix_splitter.argument_parser import args
 from sys import exit
-from helpers import (get_video_description, get_songs,
-                     make_ids_list, make_urls_list,
-                     append_artist, makes_songs_to_download_list,
-                     get_songs_txt)
+from mix_splitter.helpers import (get_video_description, get_songs,
+                                  make_ids_list, make_urls_list,
+                                  append_artist, makes_songs_to_download_list,
+                                  get_songs_txt)
 
 
 def main():
